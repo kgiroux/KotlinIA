@@ -36,6 +36,10 @@ class Neurone{
      * Preactivation phase
      */
 
+    /**
+     * Preactivation function
+     * @param entries : list of entries
+     */
     fun preactivation(entries : MutableList<Double> ){
         var result = 0.0
 

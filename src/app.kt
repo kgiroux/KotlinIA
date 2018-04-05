@@ -3,6 +3,9 @@ import com.giroux.kevin.neurone.DataSet
 import com.giroux.kevin.neurone.Neurone
 import java.util.*
 
+/**
+ * Main class for the KotLin IA
+ */
 fun main(args: Array<String>){
     println("Hello world")
     println("First Neurone")
@@ -91,7 +94,9 @@ fun main(args: Array<String>){
 }
 
 val random = Random()
-
+/**
+ *  Permet de génerer un nombre aléatoire de type Double
+ */
 fun rand() : Double {
     return random.nextDouble()
 }
