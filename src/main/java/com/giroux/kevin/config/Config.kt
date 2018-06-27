@@ -1,7 +1,7 @@
 package com.giroux.kevin.config
 
 /**
- * Configuration's class for the neurone
+ * ConfigurationService's class for the neurone
  * @author Kévin Giroux
  */
 class Config {
@@ -21,4 +21,9 @@ class Config {
      *  Entries Number
      */
     var entriesNumber : Int = 100
+
+    /**
+     * Bias for calculation
+     */
+    var biasValue : Double = 0.06
 }

@@ -7,11 +7,11 @@ import com.giroux.kevin.config.Config
  * This class implements the auto learning
  * @author Kévin Giroux
  */
-class Neurone{
+class Neurone {
     /**
      *  Class that contain the weight for each entries
      */
-    var weight : MutableList<Double> = mutableListOf()
+    private var weight : MutableList<Double> = mutableListOf()
     /**
      * Bias for the neurone
      */
@@ -79,16 +79,27 @@ class Neurone{
     }
 
     override fun toString(): String {
-        return "Neurone(" +
-                "\n\tweight=$weight, " +
-                "\n\tbias=$bias, " +
-                "\n\toutput=$output, " +
-                "\n\tpreactivationResult=$preactivationResult, " +
-                "\n\tgradientBias=$gradientBias, " +
-                "\n\tgradientWeight=$gradientWeight" +
-                "\n)"
+        return "{" +
+                "\n\t\"weight\": " + "$weight, " +
+                "\n\t\"bias\": " + "$bias, " +
+                "\n\t\"output\": " + "$output, " +
+                "\n\t\"preactivationResult\": " + "$preactivationResult, " +
+                "\n\t\"gradientBias\": " + "$gradientBias, " +
+                "\n\t\"gradientWeight\": " + "$gradientWeight" +
+                "\n}"
     }
 
+    fun addWeigh(data : Double){
+        this.weight.add(data)
+    }
 
+    fun getDate(index : Int) : Double{
+        return this.weight.get(index)
+    }
+
+    fun clear() {
+        this.weight = mutableListOf()
+        this.gradientWeight = mutableListOf()
+    }
 
 }

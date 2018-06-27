@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kotlin IA </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Kotlin IA WebSockets </h1>
+    <div>
+        <div id="clientid">Client ID: </div>
+        <div>-----------------------------</div>
+        <div>Result IALearning ... <span id="rand"></span></div>
+        <div>-----------------------------</div>
+        <div>
+            <h2>Neurone Configuration:</h2>
+            <div id="primes">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Bias
+                        </th>
+                        <th>
+                            GradientBias
+                        </th>
+
+                        <th>
+                            Weight
+                        </th>
+                        <th>
+                            GradientWeight
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody id="data">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var clientId = parseInt(Math.random()*100000);
+        var previousMessage = ""
+        document.querySelector('#clientid').innerHTML += clientId;
+        var ws = new WebSocket("ws://localhost:8080/logsComputation");
+        ws.onopen = function() { console.log('connection established') };
+        ws.onclose = function() { console.log('connection closed') };
+        ws.onerror = function(err) { console.log('error: ', err)};
+        ws.onmessage = function(message) {
+            var sender = message.data.split(":")[0];
+            var value = JSON.parse(message.data.split("|")[1]);
+            if (sender !== clientId.toString()) {
+                if(previousMessage !== value){
+                 document.getElementById('data').innerHTML = ''
+                 for(var i = 0; i<value.weight.length; i++){
+                  document.getElementById('data').innerHTML += '<tr><td>'+ i +'</td><td>' + value.bias + "</td><td>" + value.gradientBias+ '</td><td>'+ value.weight[i] + '</td><td>' + value.gradientWeight[i] + '</td></tr></div>';
+                 }
+                 previousMessage = value
+                }
+             }
+        };
+
+        window.setInterval(function() {
+            var rand = parseInt(Math.random()*100);
+            document.getElementById('rand').innerHTML = rand;
+            ws.send(clientId);
+        }, 500);
+    </script>
+</body>
+</html>
